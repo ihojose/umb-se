@@ -20,4 +20,10 @@ func Router(router *mux.Router) {
 	router.HandleFunc("/account", controller.RegisterUser).Methods("POST")
 	router.HandleFunc("/account", controller.UpdateUser).Methods("PUT")
 	router.HandleFunc("/account/login", controller.UserLogin).Methods("POST")
+	router.HandleFunc("/airplane", controller.RegisterAirplane).Methods("POST")
+	router.HandleFunc("/airplane", controller.UpdateAirplane).Methods("PUT")
+	router.HandleFunc("/airplane/{id}", controller.DeleteAirplane).Methods("DELETE")
+	router.HandleFunc("/problem", controller.InsertProblem).Methods("POST")
+	router.HandleFunc("/problem", controller.UpdateProblem).Methods("PUT")
+	router.HandleFunc("/problem/{id}", controller.DeleteProblem).Methods("DELETE")
 }

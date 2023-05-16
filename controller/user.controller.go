@@ -26,7 +26,7 @@ func UserLogin(rw http.ResponseWriter, req *http.Request) {
 
 	// Get User Data
 	db := database.Connect()
-	result := db.Model(&user).First(&user, "id = ?", req.FormValue("username"))
+	result := db.Model(&user).First(&user, "id", req.FormValue("username"))
 
 	if req.FormValue("username") != strconv.Itoa(int(user.ID)) || user.HashPass != passwd {
 		log.Printf("User %v cannot be logged in!", user.ID)
