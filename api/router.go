@@ -17,6 +17,10 @@ func Router(router *mux.Router) {
 	router.HandleFunc("/option", controller.InsertOption).Methods("POST")
 	router.HandleFunc("/option", controller.UpdateOption).Methods("PUT")
 	router.HandleFunc("/option/{id}", controller.DeleteOption).Methods("DELETE")
+	router.HandleFunc("/option/has/problem", controller.InsertHasProblem).Methods("POST")
+	router.HandleFunc("/option/has/problem", controller.UpdateHasProblem).Methods("PUT")
+	router.HandleFunc("/option/has/problem/{id}", controller.HasProblem).Methods("GET")
+	router.HandleFunc("/option/has/problem/{id}-{pr}", controller.DeleteHasProblem).Methods("DELETE")
 	router.HandleFunc("/account", controller.RegisterUser).Methods("POST")
 	router.HandleFunc("/account", controller.UpdateUser).Methods("PUT")
 	router.HandleFunc("/account/login", controller.UserLogin).Methods("POST")
@@ -25,5 +29,7 @@ func Router(router *mux.Router) {
 	router.HandleFunc("/airplane/{id}", controller.DeleteAirplane).Methods("DELETE")
 	router.HandleFunc("/problem", controller.InsertProblem).Methods("POST")
 	router.HandleFunc("/problem", controller.UpdateProblem).Methods("PUT")
+	router.HandleFunc("/problem", controller.GetProblems).Methods("GET")
 	router.HandleFunc("/problem/{id}", controller.DeleteProblem).Methods("DELETE")
+	router.HandleFunc("/problem/{id}", controller.GetProblem).Methods("GET")
 }

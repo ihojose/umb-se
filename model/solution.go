@@ -6,5 +6,4 @@ type Solution struct {
 	Efficacy    float32               `json:"efficacy"`
 	ProblemID   string                `json:"problem_id"`
 	HasSolution []SessionHashSolution `json:"has_solution"`
-	Problem     Problem
 }

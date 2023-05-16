@@ -46,7 +46,7 @@ func GetRule(rw http.ResponseWriter, req *http.Request) {
 	var rule model.Rule
 
 	db := database.Connect()
-	db.Model(&model.Rule{}).Preload("Options").Preload("Options.NextRule").Find(&rule, "id", mux.Vars(req)["id"])
+	db.Model(&model.Rule{}).Preload("Options").Preload("Options.NextRule").Preload("Options.HasProblem").Find(&rule, "id", mux.Vars(req)["id"])
 
 	utils.SetResponse(rw, rule)
 }
@@ -56,7 +56,7 @@ func GetRules(rw http.ResponseWriter, req *http.Request) {
 	var rules []model.Rule
 
 	db := database.Connect()
-	db.Model(&[]model.Rule{}).Preload("Options").Preload("Options.NextRule").Find(&rules)
+	db.Model(&[]model.Rule{}).Preload("Options").Preload("Options.NextRule").Preload("Options.HasProblem.Problem").Find(&rules)
 
 	utils.SetResponse(rw, rules)
 }
