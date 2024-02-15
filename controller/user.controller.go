@@ -1,7 +1,6 @@
 package controller
 
 import (
-	"airbusexpert/database"
 	"airbusexpert/model"
 	"airbusexpert/utils"
 	"crypto/sha256"
@@ -25,13 +24,12 @@ func UserLogin(rw http.ResponseWriter, req *http.Request) {
 	passwd := hex.EncodeToString(hash.Sum(nil))
 
 	// Get User Data
-	db := database.Connect()
 	result := db.Model(&user).First(&user, "id", req.FormValue("username"))
 
 	if req.FormValue("username") != strconv.Itoa(int(user.ID)) || user.HashPass != passwd {
 		log.Printf("User %v cannot be logged in!", user.ID)
-		utils.SetResponse(rw, model.Response{
-			Status:  401,
+		utils.SetResponseCode(req, rw, model.Response{
+			Status:  http.StatusUnauthorized,
 			Message: "Username or password is incorrect!",
 		})
 		return
@@ -40,7 +38,7 @@ func UserLogin(rw http.ResponseWriter, req *http.Request) {
 	errors.Is(result.Error, gorm.ErrRecordNotFound)
 
 	log.Printf("User %v logged in...", user.ID)
-	utils.SetResponse(rw, model.Token{
+	utils.SetResponse(req, rw, model.Token{
 		Token: utils.JwtBuilder(user),
 	})
 }
@@ -57,7 +55,6 @@ func UpdateUser(rw http.ResponseWriter, req *http.Request) {
 	}
 
 	// Database registration
-	db := database.Connect()
 	db.First(&data).Where("id", user.ID)
 
 	// User Entity
@@ -70,8 +67,8 @@ func UpdateUser(rw http.ResponseWriter, req *http.Request) {
 
 	// Response
 	log.Println("The account was updated...")
-	utils.SetResponse(rw, model.Response{
-		Status:  200,
+	utils.SetResponse(req, rw, model.Response{
+		Status:  http.StatusOK,
 		Message: "The account was updated!",
 	})
 }
@@ -102,13 +99,12 @@ func RegisterUser(rw http.ResponseWriter, req *http.Request) {
 	user.HashToken = "-"
 
 	// Database registration
-	db := database.Connect()
 	db.Create(&user)
 
 	// Response
 	log.Println("New user account registered...")
-	utils.SetResponse(rw, model.Response{
-		Status:  200,
+	utils.SetResponse(req, rw, model.Response{
+		Status:  http.StatusOK,
 		Message: "You registered!",
 	})
 }

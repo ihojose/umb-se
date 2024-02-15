@@ -10,9 +10,9 @@ import (
 
 func Connect() *gorm.DB {
 	cfg := _mysql.Config{
-		User:                 "ihojose",
-		Passwd:               "ezfokmxwabbu",
-		Addr:                 "db4free.net:3306",
+		User:                 "root",
+		Passwd:               "mysql",
+		Addr:                 "localhost:3306",
 		DBName:               "airlanese",
 		Net:                  "tcp",
 		AllowNativePasswords: true,

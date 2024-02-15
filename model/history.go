@@ -5,6 +5,4 @@ type History struct {
 	Datetime  string `json:"datetime"`
 	SessionID uint   `json:"session_id"`
 	OptionID  uint   `json:"option_id"`
-	Session   Session
-	Option    Option
 }

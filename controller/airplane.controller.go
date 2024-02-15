@@ -1,7 +1,6 @@
 package controller
 
 import (
-	"airbusexpert/database"
 	"airbusexpert/model"
 	"airbusexpert/utils"
 	"encoding/json"
@@ -12,11 +11,10 @@ import (
 )
 
 func DeleteAirplane(rw http.ResponseWriter, req *http.Request) {
-	db := database.Connect()
 	db.Delete(&model.Airplane{}, "id", mux.Vars(req)["id"])
 
 	log.Println("The airplane was deleted...")
-	utils.SetResponse(rw, model.Response{
+	utils.SetResponse(req, rw, model.Response{
 		Status:  200,
 		Message: "The airplane was deleted!",
 	})
@@ -34,7 +32,6 @@ func UpdateAirplane(rw http.ResponseWriter, req *http.Request) {
 	}
 
 	// Database registration
-	db := database.Connect()
 	db.First(&data).Where("id", airplane.ID)
 
 	// User Entity
@@ -47,7 +44,7 @@ func UpdateAirplane(rw http.ResponseWriter, req *http.Request) {
 
 	// Response
 	log.Println("The airplane was updated...")
-	utils.SetResponse(rw, model.Response{
+	utils.SetResponse(req, rw, model.Response{
 		Status:  200,
 		Message: "The airplane was updated!",
 	})
@@ -64,12 +61,11 @@ func RegisterAirplane(rw http.ResponseWriter, req *http.Request) {
 	}
 
 	// Database registration
-	db := database.Connect()
 	db.Create(&airplane)
 
 	// Response
 	log.Println("New airplane registered...")
-	utils.SetResponse(rw, model.Response{
+	utils.SetResponse(req, rw, model.Response{
 		Status:  200,
 		Message: "Airplane registered!",
 	})
